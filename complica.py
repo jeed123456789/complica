@@ -12,7 +12,8 @@ def makeBoard(FINAL_ROW,FINAL_COL):
     for i in range(FINAL_ROW):
         for j in range(FINAL_COL):
             temp.append(' ')
-        gameboard.append(' ')
+        gameboard.append(temp)
+        temp = []
     return gameboard
 
 def updateBoard(gameboard, row, col, piece):
@@ -37,7 +38,6 @@ def checkWinner(gameboard,piece,FINAL_ROW,FINAL_COL):
     if FINAL_COL>3:
         for i in range(FINAL_ROW):
             for j in range(FINAL_COL-3):
-                print(j)
                 if gameboard[i][j] == gameboard[i][j+1] == gameboard[i][j+2] == gameboard[i][j+3] == piece:
                     return True
     # Check for verticals
@@ -85,21 +85,21 @@ while noWinner:
         # putting user input into the board
             # if the column is not filled up
             print(col)
+            print(gameboard)
             print(gameboard[0][col])
             if gameboard[0][col] == ' ':
-                print("we re in the not filled situation.")
                 row = checkNextOpen(gameboard, FINAL_ROW, col)
-                print('right before we update the values of gameboard, row, col respectively are:',gameboard,row,col)
                 updateBoard(gameboard,row,col,'X')
                 turn = 1
                 printBoard(gameboard,dec1,dec2,FINAL_ROW,FINAL_COL)
+                print()
             # if the column is filled up
             else:
                 for r in range(FINAL_ROW-2,-1,-1):
                     gameboard[r+1][col] = gameboard[r][col]
-                print('right before we update the values of gameboard, row, col respectively are:',gameboard,row,col)
                 updateBoard(gameboard,0,col,'X')
                 printBoard(gameboard,dec1,dec2,FINAL_ROW,FINAL_COL)
+                print()
                 turn = 1
     # Computer's turn
     else:
@@ -110,12 +110,14 @@ while noWinner:
             updateBoard(gameboard,row,comp_col,'O')
             turn = 0
             printBoard(gameboard,dec1,dec2,FINAL_ROW,FINAL_COL)
+            print()
         # if the column is filled up
         else:
             for r in range(FINAL_ROW-2,-1,-1):
                 gameboard[r+1][comp_col] = gameboard[r][comp_col]
             updateBoard(gameboard,0,comp_col,'O')
             printBoard(gameboard,dec1,dec2,FINAL_ROW,FINAL_COL)
+            print()
             turn = 0
     # Checking for winner(s)
     if checkWinner(gameboard,'X',FINAL_ROW,FINAL_COL):
