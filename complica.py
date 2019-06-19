@@ -6,9 +6,9 @@ import random
 # X = first player
 # O = computer
 
-print('Hello, user! Welcome to the game of Complica!')
-print('Complia is a variant of Connect Four. the variation is that once a Complica column is full, subsequent chips into that column push lowerlevel chips out; columns are essentially an infinite queue with limited space.')
-FINAL_ROW= int(input('State the numbers of rows you want  in the gameboard: '))
+print('Hello, user! Welcome to playing the game of Complica!')
+print('Complia is a variant of Connect Four which once a Complica column is full, subsequent chips into that column push lowerlevel chips out; columns are essentially an infinite queue with limited space.')
+FINAL_ROW= int(input('State the numbers of rows you want in the gameboard: '))
 FINAL_COL = int(input('State the number of columns you want in the gameboard: '))
 player_win = False
 comp_win = False
@@ -37,7 +37,8 @@ while noWinner:
                         row = r
                         break
                 print(row)
-                gameboard[row-1][col] = 'X'
+                gameboard[row][col] = 'X'
+                print('filled user piece into board' )
                 print(gameboard)
                 turn = 1
                 print(dec1)
@@ -118,30 +119,30 @@ while noWinner:
                 noWinner = False
                 break
     # Check for diagonals
-    for i in range(FINAL_ROW-3):
-        for j in range(FINAL_COL-3):
-            if gameboard[i][j] == 'X' and gameboard[i+1][j+1] == 'X' and gameboard[i+2][j+2] == 'X' and gameboard[i+3][j+3] == 'X':
-                player_win = True
-                noWinner = False
-                break
-    for i in range(FINAL_ROW-3):
-        for j in range(FINAL_COL-3):
-            if gameboard[i][j] == 'O' and gameboard[i+1][j+1] == 'O' and gameboard[i+2][j+2] == 'O' and gameboard[i+3][j+3] == 'O':
-                comp_win = True
-                noWinner = False
-                break
-    for i in range(3,FINAL_ROW):
-        for j in range(FINAL_COL-3):
-            if gameboard[i][j] == 'X' and gameboard[i-1][j+1] == 'X' and gameboard[i-2][j+2] == 'X' and gameboard[i-3][j+3] == 'X':
-                player_win = True
-                noWinner = False
-                break
-    for i in range(3,FINAL_ROW):
-       for j in range(FINAL_COL-3):
-            if gameboard[i][j] == 'O' and gameboard[i-1][j+1] == 'O' and gameboard[i-2][j+2] == 'O' and gameboard[i-3][j+3] == 'O':
-                comp_win = True
-                noWinner = False
-                break
+##    for i in range(FINAL_ROW-3):
+##        for j in range(FINAL_COL-3):
+##            if gameboard[i][j] == 'X' and gameboard[i+1][j+1] == 'X' and gameboard[i+2][j+2] == 'X' and gameboard[i+3][j+3] == 'X':
+##                player_win = True
+##                noWinner = False
+##                break
+##    for i in range(FINAL_ROW-3):
+##        for j in range(FINAL_COL-3):
+##            if gameboard[i][j] == 'O' and gameboard[i+1][j+1] == 'O' and gameboard[i+2][j+2] == 'O' and gameboard[i+3][j+3] == 'O':
+##                comp_win = True
+##                noWinner = False
+##                break
+##    for i in range(3,FINAL_ROW):
+##        for j in range(FINAL_COL-3):
+##            if gameboard[i][j] == 'X' and gameboard[i-1][j+1] == 'X' and gameboard[i-2][j+2] == 'X' and gameboard[i-3][j+3] == 'X':
+##                player_win = True
+##                noWinner = False
+##                break
+##    for i in range(3,FINAL_ROW):
+##       for j in range(FINAL_COL-3):
+##            if gameboard[i][j] == 'O' and gameboard[i-1][j+1] == 'O' and gameboard[i-2][j+2] == 'O' and gameboard[i-3][j+3] == 'O':
+##                comp_win = True
+##                noWinner = False
+##                break
 #Printing the result of the game
 if player_win and comp_win:
     print('The game tied')
