@@ -13,26 +13,16 @@ def makeBoard(FINAL_ROW,FINAL_COL):
         for j in range(FINAL_COL):
             temp.append(' ')
         gameboard.append(' ')
-    return gameboard  
+    return gameboard
 
 def updateBoard(gameboard, row, col, piece):
-    print('row:',row)
-    print('col:',col)
     gameboard[row][col] = piece
-    print(gameboard)
-    print('update was called!')
-    
-def isFilledUp(gameboard, col):
-    if gameboard[0][col] == ' ':
-        return False
-    else:
-        return True
-    
+
 def checkNextOpen(gameboard, FINAL_ROW, col):
     for r in range(FINAL_ROW-1,-1,-1):
         if gameboard[r][col] == ' ':
             return r
-        
+
 def printBoard(gameboard, dec1, dec2, FINAL_ROW, FINAL_COL):
     print(dec1)
     for i in range(FINAL_ROW):
@@ -44,25 +34,29 @@ def printBoard(gameboard, dec1, dec2, FINAL_ROW, FINAL_COL):
 
 def checkWinner(gameboard,piece,FINAL_ROW,FINAL_COL):
     # Check for horizontals
-    for i in range(FINAL_ROW):
-        for j in range(FINAL_COL-3):
-            if gameboard[i][j] == piece and gameboard[i][j+1] == piece and gameboard[i][j+2] == piece and gameboard[i][j+3] == piece:
-                return True
+    if FINAL_COL>3:
+        for i in range(FINAL_ROW):
+            for j in range(FINAL_COL-3):
+                print(j)
+                if gameboard[i][j] == gameboard[i][j+1] == gameboard[i][j+2] == gameboard[i][j+3] == piece:
+                    return True
     # Check for verticals
-    for i in range(FINAL_ROW-3):
-        for j in range(FINAL_COL):
-            if gameboard[i][j] == piece and gameboard[i+1][j] == piece and gameboard[i+2][j] == piece and gameboard[i+3][j] == piece:
-                return True
+    if FINAL_ROW > 3:
+        for i in range(FINAL_ROW-3):
+            for j in range(FINAL_COL):
+                if gameboard[i][j] == gameboard[i+1][j] == gameboard[i+2][j] == gameboard[i+3][j] == piece:
+                    return True
     # Check for diagonals
-    for i in range(FINAL_ROW-3):
-        for j in range(FINAL_COL-3):
-            if gameboard[i][j] == piece and gameboard[i+1][j+1] == piece and gameboard[i+2][j+2] == piece and gameboard[i+3][j+3] == piece:
-                return True
-    for i in range(3,FINAL_ROW):
-        for j in range(FINAL_COL-3):
-            if gameboard[i][j] == 'X' and gameboard[i-1][j+1] == 'X' and gameboard[i-2][j+2] == 'X' and gameboard[i-3][j+3] == 'X':
-                return True
-            
+    if FINAL_ROW > 3 and FINAL_COL > 4:
+        for i in range(FINAL_ROW-3):
+            for j in range(FINAL_COL-3):
+                if gameboard[i][j] == piece and gameboard[i+1][j+1] == piece and gameboard[i+2][j+2] == piece and gameboard[i+3][j+3] == piece:
+                    return True
+        for i in range(3,FINAL_ROW):
+            for j in range(FINAL_COL-3):
+                if gameboard[i][j] == 'X' and gameboard[i-1][j+1] == 'X' and gameboard[i-2][j+2] == 'X' and gameboard[i-3][j+3] == 'X':
+                    return True
+
 print('Hello, user! Welcome to playing the game of Complica!')
 print('Complia is a variant of Connect Four which once a Complica column is full, subsequent chips into that column push lowerlevel chips out')
 print('columns are essentially an infinite queue with limited space.')
@@ -84,21 +78,22 @@ row = 0
 while noWinner:
     # Ask user for input
     if turn==0:
-        col = int(input('Player1, choose your column (0~'+str(FINAL_COL-1)+'): '))
+        col = int(input('Player1, choose your column (0-'+str(FINAL_COL-1)+'): '))
         if col > FINAL_COL-1:
             print('That is not an available choice. Choose another column.')
         else:
         # putting user input into the board
             # if the column is not filled up
-            print(gameboard)
-            if not isFilledUp(gameboard,col):
+            print(col)
+            print(gameboard[0][col])
+            if gameboard[0][col] == ' ':
                 print("we re in the not filled situation.")
                 row = checkNextOpen(gameboard, FINAL_ROW, col)
                 print('right before we update the values of gameboard, row, col respectively are:',gameboard,row,col)
                 updateBoard(gameboard,row,col,'X')
                 turn = 1
                 printBoard(gameboard,dec1,dec2,FINAL_ROW,FINAL_COL)
-            # if the column is filled up 
+            # if the column is filled up
             else:
                 for r in range(FINAL_ROW-2,-1,-1):
                     gameboard[r+1][col] = gameboard[r][col]
@@ -109,8 +104,8 @@ while noWinner:
     # Computer's turn
     else:
         comp_col = random.randint(0,FINAL_COL-1)
-        # if the column is not filled up 
-        if isFilledUp(gameboard,comp_col):
+        # if the column is not filled up
+        if gameboard[0][col] == ' ':
             row = checkNextOpen(gameboard, FINAL_ROW,comp_col)
             updateBoard(gameboard,row,comp_col,'O')
             turn = 0
@@ -136,4 +131,3 @@ elif player_win:
     print('You win! Congrats!')
 elif comp_win:
     print('You lost! Try again!')
-        
