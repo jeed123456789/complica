@@ -6,8 +6,21 @@ import random
 # X = first player
 # O = computer
 
+def makeBoard(FINAL_ROW,FINAL_COL):
+    gameboard= []
+    temp = []
+    for i in range(FINAL_ROW):
+        for j in range(FINAL_COL):
+            temp.append(' ')
+        gameboard.append(' ')
+    return gameboard  
+
 def updateBoard(gameboard, row, col, piece):
+    print('row:',row)
+    print('col:',col)
     gameboard[row][col] = piece
+    print(gameboard)
+    print('update was called!')
     
 def isFilledUp(gameboard, col):
     if gameboard[0][col] == ' ':
@@ -51,12 +64,14 @@ def checkWinner(gameboard,piece,FINAL_ROW,FINAL_COL):
                 return True
             
 print('Hello, user! Welcome to playing the game of Complica!')
-print('Complia is a variant of Connect Four which once a Complica column is full, subsequent chips into that column push lowerlevel chips out; columns are essentially an infinite queue with limited space.')
+print('Complia is a variant of Connect Four which once a Complica column is full, subsequent chips into that column push lowerlevel chips out')
+print('columns are essentially an infinite queue with limited space.')
 FINAL_ROW= int(input('State the numbers of rows you want in the gameboard: '))
 FINAL_COL = int(input('State the number of columns you want in the gameboard: '))
 player_win = False
 comp_win = False
-gameboard = [[' ']*FINAL_COL]*FINAL_ROW
+# Making the board
+gameboard =makeBoard(FINAL_ROW,FINAL_COL)
 dec1 = '+-'*FINAL_COL+'+'
 dec2 = '|'
 print(dec1)
@@ -75,15 +90,19 @@ while noWinner:
         else:
         # putting user input into the board
             # if the column is not filled up
+            print(gameboard)
             if not isFilledUp(gameboard,col):
+                print("we re in the not filled situation.")
                 row = checkNextOpen(gameboard, FINAL_ROW, col)
+                print('right before we update the values of gameboard, row, col respectively are:',gameboard,row,col)
                 updateBoard(gameboard,row,col,'X')
                 turn = 1
                 printBoard(gameboard,dec1,dec2,FINAL_ROW,FINAL_COL)
             # if the column is filled up 
-            else: 
+            else:
                 for r in range(FINAL_ROW-2,-1,-1):
                     gameboard[r+1][col] = gameboard[r][col]
+                print('right before we update the values of gameboard, row, col respectively are:',gameboard,row,col)
                 updateBoard(gameboard,0,col,'X')
                 printBoard(gameboard,dec1,dec2,FINAL_ROW,FINAL_COL)
                 turn = 1
