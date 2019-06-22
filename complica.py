@@ -62,6 +62,7 @@ print('Complia is a variant of Connect Four which once a Complica column is full
 print('columns are essentially an infinite queue with limited space.')
 FINAL_ROW= int(input('State the numbers of rows you want in the gameboard: '))
 FINAL_COL = int(input('State the number of columns you want in the gameboard: '))
+print('Your piece is X.')
 player_win = False
 comp_win = False
 # Making the board
@@ -84,9 +85,6 @@ while noWinner:
         else:
         # putting user input into the board
             # if the column is not filled up
-            print(col)
-            print(gameboard)
-            print(gameboard[0][col])
             if gameboard[0][col] == ' ':
                 row = checkNextOpen(gameboard, FINAL_ROW, col)
                 updateBoard(gameboard,row,col,'X')
